@@ -1,0 +1,67 @@
+{
+  "name": "n8n-nodes-praisonai",
+  "version": "0.1.0",
+  "description": "n8n community node for PraisonAI - Run AI agents with PraisonAI",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "praisonai",
+    "ai-agents",
+    "workflow-automation",
+    "llm"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/MervinPraison/n8n-nodes-praisonai",
+  "author": {
+    "name": "Mervin Praison",
+    "email": "mervin@praison.ai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MervinPraison/n8n-nodes-praisonai.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials --ext .ts",
+    "lintfix": "eslint nodes credentials --ext .ts --fix",
+    "prepublishOnly": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/PraisonAIApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/PraisonAI/PraisonAI.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.0",
+    "gulp": "^4.0.2",
+    "jest": "^29.7.0",
+    "n8n-workflow": "^1.0.0",
+    "prettier": "^3.2.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

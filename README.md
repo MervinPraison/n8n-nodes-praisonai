@@ -82,11 +82,33 @@ Connect multiple PraisonAI nodes to create complex workflows:
 [Trigger] → [PraisonAI: Researcher] → [PraisonAI: Writer] → [PraisonAI: Editor]
 ```
 
+## Example Workflows
+
+Ready-to-use workflow templates are available in the [`examples/`](examples/) folder:
+
+### 1. AI Research Workflow
+Simple webhook-triggered research agent.
+- **File**: `examples/ai-research-workflow.json`
+- **Use case**: API endpoint for AI-powered research
+
+### 2. Multi-Agent Content Pipeline
+Chain multiple agents: Researcher → Writer → Editor
+- **File**: `examples/multi-agent-content-pipeline.json`
+- **Use case**: Automated content creation pipeline
+
+### 3. Slack AI Assistant
+Slack bot powered by PraisonAI agents.
+- **File**: `examples/slack-ai-assistant.json`
+- **Use case**: AI assistant in Slack channels
+
+**Import**: Copy the JSON and paste into n8n (Ctrl+V on canvas)
+
 ## Resources
 
 * [PraisonAI Documentation](https://docs.praison.ai)
 * [n8n Community Nodes Documentation](https://docs.n8n.io/integrations/community-nodes/)
 * [GitHub Repository](https://github.com/MervinPraison/n8n-nodes-praisonai)
+* [npm Package](https://www.npmjs.com/package/n8n-nodes-praisonai)
 
 ## Development
 

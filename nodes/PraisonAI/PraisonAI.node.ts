@@ -113,10 +113,9 @@ export class PraisonAI implements INodeType {
 				const apiUrl = credentials.apiUrl as string;
 
 				try {
-					const response = await this.helpers.request({
+					const response = await this.helpers.httpRequest({
 						method: 'GET',
 						url: `${apiUrl}/agents/list`,
-						json: true,
 					});
 
 					if (response.agents && Array.isArray(response.agents)) {
@@ -157,11 +156,10 @@ export class PraisonAI implements INodeType {
 					const agent = this.getNodeParameter('agent', i) as string;
 					const query = this.getNodeParameter('query', i) as string;
 
-					const response = await this.helpers.request({
+					const response = await this.helpers.httpRequest({
 						method: 'POST',
 						url: `${apiUrl}/agents/${agent}`,
 						body: { query },
-						json: true,
 						timeout,
 					});
 
@@ -172,11 +170,10 @@ export class PraisonAI implements INodeType {
 				} else if (operation === 'runWorkflow') {
 					const query = this.getNodeParameter('query', i) as string;
 
-					const response = await this.helpers.request({
+					const response = await this.helpers.httpRequest({
 						method: 'POST',
 						url: `${apiUrl}/agents`,
 						body: { query },
-						json: true,
 						timeout,
 					});
 
@@ -185,10 +182,9 @@ export class PraisonAI implements INodeType {
 						pairedItem: { item: i },
 					});
 				} else if (operation === 'listAgents') {
-					const response = await this.helpers.request({
+					const response = await this.helpers.httpRequest({
 						method: 'GET',
 						url: `${apiUrl}/agents/list`,
-						json: true,
 						timeout,
 					});
 

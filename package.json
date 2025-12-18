@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-praisonai",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "n8n community node for PraisonAI - Run AI agents with PraisonAI",
   "keywords": [
     "n8n-community-node-package",

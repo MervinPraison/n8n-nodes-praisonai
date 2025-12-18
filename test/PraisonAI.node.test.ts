@@ -123,7 +123,7 @@ describe('PraisonAI Credentials', () => {
 			);
 			expect(apiUrlProp).toBeDefined();
 			expect(apiUrlProp?.type).toBe('string');
-			expect(apiUrlProp?.default).toBe('http://localhost:8005');
+			expect(apiUrlProp?.default).toBe('http://localhost:8080');
 		});
 
 		it('should have openaiApiKey property', () => {

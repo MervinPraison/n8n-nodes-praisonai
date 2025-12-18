@@ -14,9 +14,9 @@ export class PraisonAIApi implements ICredentialType {
 			displayName: 'API URL',
 			name: 'apiUrl',
 			type: 'string',
-			default: 'http://localhost:8005',
-			placeholder: 'http://localhost:8005',
-			description: 'The URL of your PraisonAI API server. Start with: praisonai serve agents.yaml',
+			default: 'http://localhost:8080',
+			placeholder: 'http://localhost:8080',
+			description: 'The URL of your PraisonAI API server. Start with: praisonai serve agents.yaml --port 8080',
 		},
 		{
 			displayName: 'OpenAI API Key',

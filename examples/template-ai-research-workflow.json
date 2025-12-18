@@ -1,0 +1,133 @@
+{
+  "name": "AI Research Workflow with PraisonAI",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🔬 AI Research Workflow\n\nSimple workflow to run AI-powered research using **PraisonAI**.\n\n### Prerequisites\n- Install: `pip install praisonai`\n- Start server: `praisonai serve agents.yaml`\n- Configure PraisonAI credentials\n\n### Usage\nPOST to webhook with:\n```json\n{\"query\": \"Your research question\"}\n```",
+        "height": 300,
+        "width": 280
+      },
+      "id": "sticky_intro",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [40, 160]
+    },
+    {
+      "parameters": {
+        "content": "## 📥 Input\n\nReceives research query via POST",
+        "height": 80,
+        "width": 180
+      },
+      "id": "sticky_input",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [360, 180]
+    },
+    {
+      "parameters": {
+        "content": "## 🤖 AI Agent\n\nResearcher agent processes the query",
+        "height": 80,
+        "width": 180
+      },
+      "id": "sticky_agent",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [580, 180]
+    },
+    {
+      "parameters": {
+        "content": "## 📤 Output\n\nReturns research results as JSON",
+        "height": 80,
+        "width": 180
+      },
+      "id": "sticky_output",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [800, 180]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "research",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook_1",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [400, 320],
+      "webhookId": "research-trigger"
+    },
+    {
+      "parameters": {
+        "operation": "runAgent",
+        "agent": "researcher",
+        "query": "={{ $json.body.query }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "praisonai_1",
+      "name": "PraisonAI Researcher",
+      "type": "n8n-nodes-praisonai.praisonAI",
+      "typeVersion": 1,
+      "position": [620, 320],
+      "credentials": {
+        "praisonAIApi": {
+          "id": "1",
+          "name": "PraisonAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "respond_1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [840, 320]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "PraisonAI Researcher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PraisonAI Researcher": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "praisonai-template"
+  },
+  "tags": []
+}

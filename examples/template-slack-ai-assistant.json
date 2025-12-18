@@ -1,0 +1,195 @@
+{
+  "name": "Slack AI Assistant with PraisonAI",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 💬 Slack AI Assistant\n\nBuild an AI-powered Slack bot using **PraisonAI** multi-agent system.\n\n### Prerequisites\n- Install: `pip install praisonai`\n- Start server: `praisonai serve agents.yaml`\n- Configure PraisonAI & Slack credentials\n- Set up Slack Event Subscriptions\n\n### How it works\n1. User mentions bot in Slack\n2. Message sent to webhook\n3. PraisonAI processes query\n4. Response posted back to Slack",
+        "height": 340,
+        "width": 300
+      },
+      "id": "sticky_intro",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [40, 120]
+    },
+    {
+      "parameters": {
+        "content": "## 📥 Slack Events\n\nReceives events from Slack",
+        "height": 80,
+        "width": 160
+      },
+      "id": "sticky_webhook",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [380, 180]
+    },
+    {
+      "parameters": {
+        "content": "## 🔍 Filter\n\nSkips URL verification requests",
+        "height": 80,
+        "width": 160
+      },
+      "id": "sticky_filter",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [560, 180]
+    },
+    {
+      "parameters": {
+        "content": "## 🤖 AI Agent\n\nProcesses message with PraisonAI",
+        "height": 80,
+        "width": 160
+      },
+      "id": "sticky_agent",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [740, 180]
+    },
+    {
+      "parameters": {
+        "content": "## 💬 Reply\n\nSends response back to Slack",
+        "height": 80,
+        "width": 160
+      },
+      "id": "sticky_reply",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [920, 180]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slack-ai",
+        "options": {}
+      },
+      "id": "webhook_slack",
+      "name": "Slack Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [400, 320],
+      "webhookId": "slack-ai-trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition_1",
+              "leftValue": "={{ $json.body.type }}",
+              "rightValue": "url_verification",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter_1",
+      "name": "Filter Verification",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [580, 320]
+    },
+    {
+      "parameters": {
+        "operation": "runWorkflow",
+        "query": "={{ $json.body.event.text }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "praisonai_assistant",
+      "name": "PraisonAI Assistant",
+      "type": "n8n-nodes-praisonai.praisonAI",
+      "typeVersion": 1,
+      "position": [760, 320],
+      "credentials": {
+        "praisonAIApi": {
+          "id": "1",
+          "name": "PraisonAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $('Slack Webhook').item.json.body.event.channel }}",
+          "mode": "id"
+        },
+        "text": "={{ $json.response }}",
+        "otherOptions": {}
+      },
+      "id": "slack_reply",
+      "name": "Reply in Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [940, 320],
+      "credentials": {
+        "slackApi": {
+          "id": "2",
+          "name": "Slack API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Slack Webhook": {
+      "main": [
+        [
+          {
+            "node": "Filter Verification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Verification": {
+      "main": [
+        [
+          {
+            "node": "PraisonAI Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PraisonAI Assistant": {
+      "main": [
+        [
+          {
+            "node": "Reply in Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "praisonai-template"
+  },
+  "tags": []
+}

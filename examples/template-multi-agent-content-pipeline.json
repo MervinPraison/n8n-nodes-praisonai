@@ -1,0 +1,209 @@
+{
+  "name": "Multi-Agent Content Pipeline with PraisonAI",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🚀 Multi-Agent Content Pipeline\n\nThis workflow uses **PraisonAI** to create a content pipeline with 3 AI agents:\n\n1. **Researcher** - Researches the topic\n2. **Writer** - Writes an article based on research\n3. **Editor** - Edits and improves the article\n\n### Prerequisites\n- Install PraisonAI: `pip install praisonai`\n- Start server: `praisonai serve agents.yaml`\n- Configure credentials with your API URL",
+        "height": 340,
+        "width": 320
+      },
+      "id": "sticky_intro",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [40, 140]
+    },
+    {
+      "parameters": {
+        "content": "## 📥 Trigger\n\nPOST request with:\n```json\n{\n  \"topic\": \"Your topic here\"\n}\n```",
+        "height": 160,
+        "width": 200
+      },
+      "id": "sticky_trigger",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [400, 140]
+    },
+    {
+      "parameters": {
+        "content": "## 🔬 Research\n\nFirst agent researches the topic thoroughly",
+        "height": 100,
+        "width": 200
+      },
+      "id": "sticky_research",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [640, 140]
+    },
+    {
+      "parameters": {
+        "content": "## ✍️ Write\n\nSecond agent writes article from research",
+        "height": 100,
+        "width": 200
+      },
+      "id": "sticky_write",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [880, 140]
+    },
+    {
+      "parameters": {
+        "content": "## 📝 Edit\n\nThird agent polishes the final article",
+        "height": 100,
+        "width": 200
+      },
+      "id": "sticky_edit",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1120, 140]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "content-pipeline",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook_1",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [440, 320],
+      "webhookId": "content-pipeline-trigger"
+    },
+    {
+      "parameters": {
+        "operation": "runAgent",
+        "agent": "researcher",
+        "query": "={{ $json.body.topic }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "praisonai_researcher",
+      "name": "Research Agent",
+      "type": "n8n-nodes-praisonai.praisonAI",
+      "typeVersion": 1,
+      "position": [680, 320],
+      "credentials": {
+        "praisonAIApi": {
+          "id": "1",
+          "name": "PraisonAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "runAgent",
+        "agent": "writer",
+        "query": "Write an article based on this research: {{ $json.response }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "praisonai_writer",
+      "name": "Writer Agent",
+      "type": "n8n-nodes-praisonai.praisonAI",
+      "typeVersion": 1,
+      "position": [920, 320],
+      "credentials": {
+        "praisonAIApi": {
+          "id": "1",
+          "name": "PraisonAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "runAgent",
+        "agent": "editor",
+        "query": "Edit and improve this article: {{ $json.response }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "praisonai_editor",
+      "name": "Editor Agent",
+      "type": "n8n-nodes-praisonai.praisonAI",
+      "typeVersion": 1,
+      "position": [1160, 320],
+      "credentials": {
+        "praisonAIApi": {
+          "id": "1",
+          "name": "PraisonAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"topic\": $('Webhook Trigger').item.json.body.topic, \"article\": $json.response } }}"
+      },
+      "id": "respond_1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1400, 320]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Research Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Agent": {
+      "main": [
+        [
+          {
+            "node": "Writer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Writer Agent": {
+      "main": [
+        [
+          {
+            "node": "Editor Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editor Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "praisonai-template"
+  },
+  "tags": []
+}

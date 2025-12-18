@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-praisonai",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "n8n community node for PraisonAI - Run AI agents with PraisonAI",
   "keywords": [
     "n8n-community-node-package",
@@ -14,7 +14,7 @@
   "homepage": "https://github.com/MervinPraison/n8n-nodes-praisonai",
   "author": {
     "name": "Mervin Praison",
-    "email": "mervin@praison.ai"
+    "email": "support@praison.ai"
   },
   "repository": {
     "type": "git",

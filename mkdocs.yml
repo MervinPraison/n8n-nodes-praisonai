@@ -1,0 +1,44 @@
+site_name: n8n PraisonAI Node
+site_url: https://n8n.praison.ai
+site_description: n8n community node for PraisonAI - Run AI agents in n8n workflows
+
+repo_name: MervinPraison/n8n-nodes-praisonai
+repo_url: https://github.com/MervinPraison/n8n-nodes-praisonai
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: pink
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: pink
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - content.code.copy
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - admonition
+  - tables
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Usage: getting-started/usage.md

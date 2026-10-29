@@ -6,7 +6,7 @@ repo_name: MervinPraison/n8n-nodes-praisonai
 repo_url: https://github.com/MervinPraison/n8n-nodes-praisonai
 
 theme:
-  name: material
+  name: !ENV [PRAISONAI_THEME, material]
   palette:
     - scheme: slate
       primary: pink

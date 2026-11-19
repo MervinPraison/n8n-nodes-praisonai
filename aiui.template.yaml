@@ -14,33 +14,35 @@ seo:
   siteUrl: https://n8n.praison.ai
 navigation:
   tabs:
-  - tab: Home
+  - tab: Docs
     groups:
-    - group: Home
+    - group: Get started
       pages:
       - index
-  - tab: Getting Started
-    groups:
+      icon: rocket
     - group: Getting Started
       pages:
       - getting-started/installation
       - getting-started/usage
+      icon: rocket
       prefix: getting-started
-  - tab: Operations
-    groups:
     - group: Operations
       pages:
       - operations/run-agent
       - operations/run-workflow
       - operations/list-agents
+      icon: book-open
       prefix: operations
-  - tab: Examples
-    groups:
     - group: Examples
       pages:
       - examples/workflows
+      icon: code
       prefix: examples
 navbar:
+  primary:
+    type: button
+    label: Quick start
+    href: /docs/getting-started/installation
   links:
   - label: GitHub
     href: https://github.com/MervinPraison/n8n-nodes-praisonai
@@ -56,6 +58,8 @@ content:
     include:
     - '**/*.md'
     - '**/*.mdx'
+    nav:
+      mode: manual
 templates:
   docs:
     layout: ThreeColumnLayout

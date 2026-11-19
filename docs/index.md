@@ -1,3 +1,18 @@
+---
+layout: home
+title: n8n PraisonAI Node
+description: n8n community node for PraisonAI - Run AI agents in n8n workflows
+hero:
+  name: n8n PraisonAI Node
+  text: n8n PraisonAI Node
+  tagline: n8n community node for PraisonAI - Run AI agents in n8n workflows
+  actions:
+  - text: Quick start
+    link: getting-started/installation.md
+  - text: View on GitHub
+    link: https://github.com/MervinPraison/n8n-nodes-praisonai
+    theme: alt
+---
 # n8n PraisonAI Node
 
 Run PraisonAI agents in n8n workflows.

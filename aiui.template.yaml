@@ -6,8 +6,9 @@ site:
   title: n8n PraisonAI Node
   ui: shadcn
   theme:
-    preset: pink
-    darkMode: true
+    preset: paper
+    radius: md
+    mode: system
   description: n8n community node for PraisonAI - Run AI agents in n8n workflows
 seo:
   siteUrl: https://n8n.praison.ai
